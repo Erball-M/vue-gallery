@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+    transition: var(--transition-theme);
+}
+
+body {
+    font-family: var(--ff);
+    font-size: var(--fz-r);
+    font-weight: var(--fw-m);
+    color: rgb(var(--color-secondary-500));
+    background-color: rgb(var(--color-primary));
+}
+
+#app {
+    background-color: rgb(var(--color-primary));
+    width: 100vw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
