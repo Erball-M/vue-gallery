@@ -1,13 +1,10 @@
 *,
 *::before,
-*::after {
-    transition: var(--transition-theme);
-}
+*::after {}
 
 body {
     font-family: var(--ff);
     font-size: var(--fz-r);
-    font-weight: var(--fw-m);
     color: rgb(var(--color-secondary-500));
     background-color: rgb(var(--color-primary));
 }
@@ -19,4 +16,13 @@ body {
     min-height: 100dvh;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+a {
+    color: rgb(var(--color-secondary-400));
+}
+
+a:hover {
+    color: rgb(var(--color-secondary-500));
+    text-decoration: underline;
 }
