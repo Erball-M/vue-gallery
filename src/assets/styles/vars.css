@@ -8,7 +8,9 @@
     --fz-xl: 46px;
 
     --fw-m: 400;
+    --fw-b: 700;
 
+    --icon-xs: 14px;
     --icon-s: 16px;
     --icon-r: 20px;
     --icon-l: 24px;
@@ -16,7 +18,7 @@
 
     --linear-gradient: linear-gradient(135deg, #fa00ff, #00e0ff 50%, #fa00ff);
 
-    /* --transition-theme: background-color 1s ease-in-out 0s, color 1s ease-in-out 0s, fill 1s ease-in-out 0s, border-color 1s ease-in-out 0s; */
+    --transition-theme: background-image .1s ease-in-out, background-color .1s ease-in-out, color .1s ease-in-out, fill .1s ease-in-out, border-color .1s ease-in-out;
 
     --container-max-width: 1280px;
     --container-padding-x: 20px;
@@ -31,6 +33,17 @@
     --button-border-radius: .28em;
 
     --nav-column-gap: 16px;
+    --nav-list-column-gap: 24px;
+    --nav-link-padding-x: 0;
+    --nav-link-padding-y: 1em;
+
+    --banner-size-r: 594px;
+    --banner-size-s: 310px;
+    --banner-description-max-width: 600px;
+    --banner-description-line-height: 1.55em;
+    --banner-color: 255, 255, 255;
+    --banner-bg-color: 0, 0, 0;
+    --banner-margin-bottom: 48px;
 }
 
 body[data-theme=light] {

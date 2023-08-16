@@ -1,23 +1,39 @@
 <script setup>
-import { ref } from 'vue';
-import Button from './ui/Button.vue'
-import TextField from './ui/TextField.vue';
+import { ref } from "vue";
+import Button from "./ui/Button.vue";
+import TextField from "./ui/TextField.vue";
 
-const isFocused = ref(false)
-const query = ref('')
+const isFocused = ref(false);
+const query = ref("");
 
-const searchQuery = () => console.log(query.value)
+const searchQuery = () => console.log(query.value);
 </script>
 
 <template>
-  <form class="search-form" :class="{'search-form_focused': isFocused}" @submit.prevent>
-    <Button icon="magnifying_glass" size="r" variant="inline" class="search-form__button" @click="searchQuery"></Button>
-    <TextField class="search-form__input" placeholder="Search high-resolution images" v-model="query" @focus="isFocused=true" @blur="isFocused=false"/>
+  <form
+    class="search-form"
+    :class="{ 'search-form_focused': isFocused }"
+    @submit.prevent
+  >
+    <Button
+      icon="magnifying_glass"
+      size="r"
+      variant="inline"
+      class="search-form__button"
+      @click="searchQuery"
+    ></Button>
+    <TextField
+      class="search-form__input"
+      placeholder="Search high-resolution images"
+      v-model="query"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+    />
   </form>
 </template>
 
 <style scoped>
-.search-form{
+.search-form {
   display: flex;
   align-content: center;
   overflow: hidden;
@@ -25,19 +41,19 @@ const searchQuery = () => console.log(query.value)
   background-color: rgb(var(--color-secondary-100));
   border: 1px solid rgb(var(--color-secondary-100));
 }
-.search-form_focused{
+.search-form_focused {
   background-color: rgb(var(--color-primary));
   border-color: rgb(var(--color-secondary-300));
 }
-.search-form:hover{
+.search-form:hover {
   border-color: rgb(var(--color-secondary-300));
 }
-.search-form__button{
+.search-form__button {
   padding-left: 1em;
 }
-.search-form__input{
+.search-form__input {
   flex: 1 1 auto;
-  padding-left: .5em;
+  padding-left: 0.5em;
   padding-right: 1em;
 }
 </style>

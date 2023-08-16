@@ -1,152 +1,243 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
-import Button from './ui/Button.vue';
-import topicsMock from '@/assets/mocks/topicsMock'
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import { RouterLink, useRoute } from "vue-router";
+import Button from "./ui/Button.vue";
+import topicsMock from "@/assets/mocks/topicsMock";
 
-const route = useRoute()
-const arrowLeft = ref(false)
-const arrowRight = ref(false)
-const topicsData = ref([])
+//NOTE: component should be decomposed
+
+const route = useRoute();
+const sliderRef = ref(null);
+const arrowLeft = ref(false);
+const arrowRight = ref(false);
+const topicsData = ref([]);
 
 function showArrows(e) {
-    const scrollValue = e.target.scrollLeft
-    const width = e.target.clientWidth
-    
-    if(scrollValue > 0) {
-        arrowLeft.value = true
-    } else if(scrollValue <= 0) {
-        arrowLeft.value = false
-    }
-    if(scrollValue >= width) {
-        arrowRight.value = false
-    } else if(scrollValue < width) {
-        arrowRight.value = true
-    }
+  const slider = sliderRef.value;
+  if (!slider.tagName) return;
+  const leftSide = slider.scrollLeft;
+  const rightSide = slider.scrollLeft + slider.clientWidth;
+  const scrollWidth = slider.scrollWidth;
+
+  // NOTE: hide in laptop screens at end of scroll
+  arrowLeft.value = leftSide > 0;
+  arrowRight.value = scrollWidth % rightSide >= 1;
+}
+watch(sliderRef, () => showArrows(), { flush: "post" });
+
+function backScroll() {
+  sliderRef.value.scrollLeft -= 300;
+}
+function forwardScroll() {
+  sliderRef.value.scrollLeft += 300;
 }
 
 onMounted(() => {
-    topicsData.value = topicsMock
-})
+  topicsData.value = topicsMock;
+  window.addEventListener("resize", showArrows);
+});
+onUnmounted(() => {
+  window.removeEventListener("resize", showArrows);
+});
 </script>
 
 <template>
   <nav class="navigation">
-    <ul class="navigation__list navigation__globals">
-        <li 
-            class="navigation__item" 
-            :class="{'navigation__item_active':route.path === '/'}" 
-        >
-            <RouterLink 
-                :to="{name:'home'}" 
-                class="navigation__link" 
-                :class="{'navigation__link_active': route.path === '/'}"
+    <div class="navigation__item navigation__globals">
+      <div class="navigation__list-wrapper">
+        <ul class="navigation__list">
+          <li class="navigation__list-item">
+            <RouterLink
+              :to="{ name: 'home' }"
+              class="navigation__link"
+              active-class="navigation__link_active"
             >
-                Editorial
+              Editorial
             </RouterLink>
-        </li>
-    </ul>
-    <div class="lists-divider"/>
-    <div 
-        class="navigation__list-wrapper"
-        @scroll="showArrows"
-    >
-    <!-- wrap every child in extra divs and make arrow buttons absolute pose  -->
-        <Button 
-            v-if="arrowLeft"
-            icon="arrow_left" 
-            variant="inline" 
-            class="navigation__button navigation__button_left"
-        ></Button>
-        <ul class="navigation__list navigation__topics">
-            <li 
-                class="navigation__item" 
-                :class="{'navigation__item_active':route.path === '/'}" 
-                v-for="topic in topicsData" 
-                :key="topic.id"
+          </li>
+          <li class="navigation__list-item">
+            <a
+              href="https://unsplash.com/"
+              target="_blank"
+              class="navigation__link"
             >
-                <RouterLink 
-                    :to="{name:'home'}" 
-                    class="navigation__link" 
-                    :class="{'navigation__link_active': route.path === '/'}"
-                >
-                    {{ topic.title }}
-                </RouterLink>
-            </li>
+              Unsplash
+            </a>
+          </li>
         </ul>
-        <Button 
-            v-if="arrowRight"
-            icon="arrow_right" 
-            variant="inline" 
-            class="navigation__button navigation__button_right"
-        ></Button>
+      </div>
+    </div>
+    <div class="navigation__item">
+      <div class="navigation__divider" />
+    </div>
+    <div class="navigation__item navigation__topics">
+      <div
+        class="navigation__slider"
+        :class="{ 'left-concealer': arrowLeft, 'right-concealer': arrowRight }"
+      >
+        <div
+          v-if="arrowLeft"
+          class="navigation__slider-arrow navigation__slider-arrow_left"
+        >
+          <Button
+            icon="arrow_left"
+            variant="inline"
+            class="slider__button"
+            @click="backScroll"
+          ></Button>
+        </div>
+        <div
+          class="navigation__list-wrapper"
+          ref="sliderRef"
+          @scroll="showArrows"
+        >
+          <ul class="navigation__list">
+            <li
+              class="navigation__list-item"
+              v-for="topic in topicsData"
+              :key="topic.id"
+            >
+              <RouterLink
+                :to="{ name: 'home' }"
+                class="navigation__link"
+                active-class="navigation__link_active"
+              >
+                {{ topic.title }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+        <div
+          v-if="arrowRight"
+          class="navigation__slider-arrow navigation__slider-arrow_right"
+        >
+          <Button
+            icon="arrow_right"
+            variant="inline"
+            class="slider__button"
+            @click="forwardScroll"
+          ></Button>
+        </div>
+      </div>
     </div>
   </nav>
 </template>
 
 <style scoped>
-.navigation{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    column-gap: var(--nav-column-gap);
-    background-color: rgb(var(--color-primary));
-    padding: 0 var(--block-padding-x);
+.navigation {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  column-gap: var(--nav-column-gap);
+  background-color: rgb(var(--color-primary));
+  padding: 0 var(--block-padding-x);
 }
-.lists-divider{
-    height: 2.3em;
-    width: 1px;
-    background: rgb(var(--color-secondary-300));
+.navigation__item {
 }
-.navigation__list-wrapper{
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -ms-overflow-style: none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    position: relative;
+.navigation__divider {
+  height: 2.3em;
+  width: 1px;
+  background: rgb(var(--color-secondary-300));
+  margin: var(--nav-link-padding-y) 0;
+}
+.navigation__item {
+}
+.navigation__list-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 .navigation__list-wrapper::-webkit-scrollbar {
-    display: none;
-    width: 0;
+  display: none;
+  width: 0;
 }
-.navigation__button{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.navigation__list {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--nav-list-column-gap);
 }
-.navigation__button_left{
-    left:0;
+.navigation__globals {
 }
-.navigation__button_right{
-    right:0;
+.navigation__topics {
+  flex: 1 1 auto;
+  overflow: hidden;
 }
-.navigation__list{
-    display: flex;
-    column-gap: var(--nav-column-gap);
+.navigation__list-item {
+  height: 100%;
 }
-.navigation__globals{}
-.navigation__topics{
-    height: 100%;
-    flex: 1 1 auto;
+.navigation__link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
 }
-.navigation__item{}
-.navigation__item_active{
-    box-shadow: inset 0 -2px rgb(var(--color-secondary-500));
+.navigation__link:hover {
+  text-decoration: none;
 }
-.navigation__link{
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
+.navigation__item_active {
 }
-.navigation__link_active{
-    color: rgb(var(--color-secondary-500));
+.navigation__link_active {
+  color: rgb(var(--color-secondary-500));
+  box-shadow: inset 0 -2px rgb(var(--color-secondary-500));
 }
-.navigation__link:hover{
-    text-decoration: none;
+.navigation__slider {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: relative;
+}
+.left-concealer::before,
+.right-concealer::after {
+  content: "";
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 10%;
+}
+.left-concealer::before {
+  left: 0;
+  background-image: linear-gradient(
+    to left,
+    transparent 0,
+    rgb(var(--color-primary)) 90%,
+    rgb(var(--color-primary))
+  );
+}
+.right-concealer::after {
+  right: 0;
+  background-image: linear-gradient(
+    to right,
+    transparent 0,
+    rgb(var(--color-primary)) 90%,
+    rgb(var(--color-primary))
+  );
+}
+.navigation__slider-arrow {
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+.navigation__slider-arrow_left {
+  left: 0;
+}
+.navigation__slider-arrow_right {
+  right: 0;
+}
+.slider__button {
 }
 </style>

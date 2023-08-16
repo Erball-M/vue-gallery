@@ -1,28 +1,31 @@
 <script setup>
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
-import Header from './components/Header.vue'
-import Navigation from './components/Navigation.vue'
-import Container from './components/ui/Container.vue'
-import { useTheme } from './composables​/useTheme'
+import { onMounted } from "vue";
+import { RouterView } from "vue-router";
+import Header from "./components/Header.vue";
+import Navigation from "./components/Navigation.vue";
+import Container from "./components/ui/Container.vue";
+import { useTheme } from "./composables​/useTheme";
 
-function toggleTheme() {
-  document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark'
-}
-
-useTheme()
+useTheme();
 </script>
 
 <template>
-  <Header/>
-  <Navigation/>
+  <div class="head">
+    <Header />
+    <Navigation />
+  </div>
   <main class="main">
-    <Container class="main__container">
-      <RouterView/>
-    </Container>
+    <RouterView />
   </main>
 </template>
 
 <style scoped>
-.main__container{}
+.head {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 10;
+}
+.main {
+}
 </style>

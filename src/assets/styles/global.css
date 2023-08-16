@@ -1,21 +1,56 @@
 *,
 *::before,
-*::after {}
+*::after {
+    /* NOTE: fix transition of slider concealers */
+    scrollbar-width: thin;
+    transition: var(--transition-theme);
+}
 
 body {
+    /* NOTE: */
+    /*width: 100vw; */
+    /* height: 100vh; */
+    /* height: 100dvh; */
+    /* overflow: hidden; */
     font-family: var(--ff);
     font-size: var(--fz-r);
     color: rgb(var(--color-secondary-500));
     background-color: rgb(var(--color-primary));
+    scrollbar-color: rgb(var(--color-secondary-100)) transparent;
 }
 
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-secondary-100));
+}
+
+body {
+    -ms-overflow-style: none;
+}
+
+
 #app {
-    background-color: rgb(var(--color-primary));
-    width: 100vw;
     min-height: 100vh;
     min-height: 100dvh;
+    position: relative;
+    background-color: rgb(var(--color-primary));
+
+    /* NOTE */
+    /* display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto 1fr;
+    height: 100vh;
+    height: 100dvh; 
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto;*/
 }
 
 a {
@@ -23,6 +58,6 @@ a {
 }
 
 a:hover {
-    color: rgb(var(--color-secondary-500));
     text-decoration: underline;
+    color: rgb(var(--color-secondary-500));
 }
