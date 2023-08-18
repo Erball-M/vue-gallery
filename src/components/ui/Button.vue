@@ -1,5 +1,5 @@
 <script setup>
-import { useSlots } from "vue";
+import { computed, useSlots } from "vue";
 import Svg from "./Svg.vue";
 
 const props = defineProps({
@@ -54,7 +54,7 @@ const classNames = {
   user-select: none;
 }
 .button_default {
-  border: 1px solid rgb(var(--color-secondary-400));
+  /* border: 1px solid rgb(var(--color-secondary-400)); */
   border-radius: var(--button-border-radius);
   background-color: rgb(var(--color-primary));
   padding: var(--button-padding-y) var(--button-padding-x);
@@ -77,7 +77,7 @@ const classNames = {
 .button:hover,
 .button:hover .button__icon,
 .button:hover .button__label {
-  border-color: rgb(var(--color-secondary-500));
+  /* border-color: rgb(var(--color-secondary-500)); */
   fill: rgb(var(--color-secondary-500));
   color: rgb(var(--color-secondary-500));
 }

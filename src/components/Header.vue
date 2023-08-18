@@ -1,25 +1,34 @@
 <script setup>
-import { RouterLink } from "vue-router";
 import Svg from "./ui/Svg.vue";
+import Navigation from "./Navigation.vue";
 import SearchForm from "./SearchForm.vue";
 import Button from "./ui/Button.vue";
 import { useThemeToggle } from "../composables​/useThemeToggle";
+
+const props = defineProps({
+  nav: Boolean,
+});
 
 const { changeTheme } = useThemeToggle();
 </script>
 
 <template>
   <header class="header">
-    <nav class="header__nav">
-      <RouterLink :to="{ name: 'home' }" class="header__logo-link">
+    <div class="header__nav">
+      <router-link
+        :to="{ name: 'home' }"
+        class="header__logo-link"
+        title="Home page"
+      >
         <Svg name="logo" size="xl" class="header__logo"></Svg>
-      </RouterLink>
+      </router-link>
       <SearchForm class="header__search"></SearchForm>
       <Button
         icon="theme"
         size="l"
         variant="inline"
         @click="changeTheme"
+        title="Toggle theme"
       ></Button>
       <!-- NOTE: Make popup window for burger menu -->
       <Button
@@ -28,14 +37,18 @@ const { changeTheme } = useThemeToggle();
         variant="inline"
         class="header__menu"
       ></Button>
-    </nav>
+    </div>
+    <Navigation v-if="props.nav" />
   </header>
 </template>
 
 <style scoped>
 .header {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 10;
   background-color: rgb(var(--color-primary));
-  padding: var(--block-padding-y) var(--block-padding-x);
 }
 .header__nav {
   display: flex;
@@ -43,6 +56,7 @@ const { changeTheme } = useThemeToggle();
   justify-content: space-between;
   align-items: stretch;
   column-gap: var(--nav-column-gap);
+  padding: var(--block-padding-y) var(--block-padding-x);
 }
 .header__logo-link {
 }

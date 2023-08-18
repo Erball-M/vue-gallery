@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { watch, computed, onMounted, ref } from "vue";
 // import { RouterLink } from "vue-router";
 import { UnLazyImage } from "@unlazy/vue/components";
 import Container from "./ui/Container.vue";
@@ -7,16 +7,24 @@ import Svg from "./ui/Svg.vue";
 import Button from "./ui/Button.vue";
 import topicsMock from "@/assets/mocks/topicsMock";
 
+const props = defineProps({
+  topic: {
+    type: Object,
+    required: true,
+  },
+});
+
 // NOTE: should get topic-data from props
-const topic = topicsMock[0];
+// const topic = topicsMock[0];
+
 const description = ref(null);
-const endsAt = new Date(topic.ends_at);
+const endsAt = new Date(props.topic.ends_at);
 
 onMounted(() => {
   const links = description.value.querySelectorAll("a");
   links.forEach((link) => {
     link.setAttribute("target", "_blank");
-    link.style.color = "rgb(var(--banner-color),0.7)";
+    link.classList.add("link");
   });
 });
 </script>
@@ -24,23 +32,24 @@ onMounted(() => {
 <template>
   <div class="banner">
     <div class="banner__image">
+      <!-- :data-srcset="dataSrcset" -->
       <UnLazyImage
         class="banner__picture"
-        :alt="topic.cover_photo.alt_description"
-        :blurhash="topic.cover_photo.blur_hash"
-        :src-set="`${topic.cover_photo.urls.small} 400w,
-              ${topic.cover_photo.urls.regular} 1080w,
-              ${topic.cover_photo.urls.thumb} 200w,
-              ${topic.cover_photo.urls.full} 1920w`"
+        :alt="props.topic.cover_photo.alt_description"
+        :blurhash="props.topic.cover_photo.blur_hash"
+        :src-set="`${props.topic.cover_photo.urls.small} 400w,
+              ${props.topic.cover_photo.urls.regular} 1080w,
+              ${props.topic.cover_photo.urls.thumb} 200w,
+              ${props.topic.cover_photo.urls.full} 1920w`"
         auto-sizes
       />
     </div>
     <div class="dimmer">
       <Container class="topic">
         <div class="topic__body">
-          <h1 class="topic__title">{{ topic.title }}</h1>
+          <h1 class="topic__title">{{ props.topic.title }}</h1>
           <h2
-            v-if="topic.owners[0].username !== 'unsplash'"
+            v-if="props.topic.owners[0].username !== 'unsplash'"
             class="topic__curated"
           >
             Curated by
@@ -48,21 +57,24 @@ onMounted(() => {
             <!-- NOTE: FIX RouterLink compiling -->
             <!-- NOTE: consider replacing router-link with a RouterLink component -->
             <router-link
-              :to="{ name: 'home' }"
+              :to="{
+                name: 'user',
+                params: { username: props.topic.owners[0].username },
+              }"
               class="topic__curated-link link"
             >
-              {{ topic.owners[0].name }}
+              {{ props.topic.owners[0].name }}
             </router-link>
           </h2>
           <div
             class="topic__description"
-            v-html="topic.description"
+            v-html="props.topic.description"
             ref="description"
           ></div>
-          <p v-if="topic.ends_at" class="topic__ends">
+          <p v-if="props.topic.ends_at" class="topic__ends">
             <Svg name="clock" size="xs" class="topic__icon" />
             Contributions closed on
-            <time :datetime="topic.ends_at">
+            <time :datetime="props.topic.ends_at">
               {{ endsAt.toLocaleDateString() }}
               at {{ endsAt.toLocaleTimeString().substr(0, 5) }}
             </time>
@@ -72,14 +84,24 @@ onMounted(() => {
           <div class="topic__photo-data">
             <!-- NOTE: for @click open popup -->
             <!-- NOTE: consider replacing router-link with a RouterLink component -->
-            <router-link :to="{ name: 'home' }" class="topic__cover-photo link">
+            <router-link
+              :to="{ name: 'home' }"
+              class="topic__cover-photo link"
+              :title="props.topic.cover_photo.alt_description"
+            >
               Photo
             </router-link>
             by
             <!-- NOTE: change "to" attr to profile route -->
             <!-- NOTE: consider replacing router-link with a RouterLink component -->
-            <router-link :to="{ name: 'home' }" class="link">
-              {{ topic.cover_photo.user.name }}
+            <router-link
+              :to="{
+                name: 'user',
+                params: { username: props.topic.cover_photo.user.username },
+              }"
+              class="link"
+            >
+              {{ props.topic.cover_photo.user.name }}
             </router-link>
           </div>
           <div class="topic__license">
@@ -166,12 +188,5 @@ onMounted(() => {
 }
 .topic__license {
   justify-self: center;
-}
-.link {
-  color: rgb(var(--banner-color), 0.7);
-}
-.link:hover {
-  color: rgb(var(--banner-color));
-  text-decoration: none;
 }
 </style>

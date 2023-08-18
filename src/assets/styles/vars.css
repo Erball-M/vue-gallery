@@ -18,7 +18,9 @@
 
     --linear-gradient: linear-gradient(135deg, #fa00ff, #00e0ff 50%, #fa00ff);
 
-    --transition-theme: background-image .1s ease-in-out, background-color .1s ease-in-out, color .1s ease-in-out, fill .1s ease-in-out, border-color .1s ease-in-out;
+    --color-positive: 0, 127, 255;
+
+    --transition-theme: background-image .1s ease-in-out, background-color .1s ease-in-out, color 0s ease-in-out, fill .1s ease-in-out, border-color .1s ease-in-out, opacity .1s ease-in-out;
 
     --container-max-width: 1280px;
     --container-padding-x: 20px;
@@ -44,6 +46,14 @@
     --banner-color: 255, 255, 255;
     --banner-bg-color: 0, 0, 0;
     --banner-margin-bottom: 48px;
+
+    --photolist-gap: 24px;
+    --photolist-columns: 3;
+
+    --user-badge-direction: row;
+    --user-badge-gap: 30px;
+    --user-badge-header-ratio: 30%;
+    --user-badge-body-ratio: 70%;
 }
 
 body[data-theme=light] {

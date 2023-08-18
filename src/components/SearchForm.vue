@@ -14,6 +14,7 @@ const searchQuery = () => console.log(query.value);
     class="search-form"
     :class="{ 'search-form_focused': isFocused }"
     @submit.prevent
+    title="Search"
   >
     <Button
       icon="magnifying_glass"

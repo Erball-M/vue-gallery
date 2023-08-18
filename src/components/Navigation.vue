@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import Button from "./ui/Button.vue";
 import topicsMock from "@/assets/mocks/topicsMock";
 
@@ -19,7 +19,6 @@ function showArrows(e) {
   const rightSide = slider.scrollLeft + slider.clientWidth;
   const scrollWidth = slider.scrollWidth;
 
-  // NOTE: hide in laptop screens at end of scroll
   arrowLeft.value = leftSide > 0;
   arrowRight.value = scrollWidth % rightSide >= 1;
 }
@@ -47,13 +46,13 @@ onUnmounted(() => {
       <div class="navigation__list-wrapper">
         <ul class="navigation__list">
           <li class="navigation__list-item">
-            <RouterLink
+            <router-link
               :to="{ name: 'home' }"
               class="navigation__link"
-              active-class="navigation__link_active"
+              exact-active-class="navigation__link_active"
             >
               Editorial
-            </RouterLink>
+            </router-link>
           </li>
           <li class="navigation__list-item">
             <a
@@ -97,13 +96,13 @@ onUnmounted(() => {
               v-for="topic in topicsData"
               :key="topic.id"
             >
-              <RouterLink
-                :to="{ name: 'home' }"
+              <router-link
+                :to="{ name: 'topic', params: { slug: topic.slug } }"
                 class="navigation__link"
-                active-class="navigation__link_active"
+                exact-active-class="navigation__link_active"
               >
                 {{ topic.title }}
-              </RouterLink>
+              </router-link>
             </li>
           </ul>
         </div>

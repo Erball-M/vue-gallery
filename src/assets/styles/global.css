@@ -61,3 +61,12 @@ a:hover {
     text-decoration: underline;
     color: rgb(var(--color-secondary-500));
 }
+
+.link {
+    color: rgb(var(--banner-color), 0.7);
+}
+
+.link:hover {
+    color: rgb(var(--banner-color));
+    text-decoration: none;
+}

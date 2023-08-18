@@ -1,31 +1,21 @@
 <script setup>
-import { onMounted } from "vue";
-import { RouterView } from "vue-router";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import Header from "./components/Header.vue";
-import Navigation from "./components/Navigation.vue";
 import Container from "./components/ui/Container.vue";
 import { useTheme } from "./composables​/useTheme";
+
+const route = useRoute();
+const isNav = computed(() => route.name !== "user");
 
 useTheme();
 </script>
 
 <template>
-  <div class="head">
-    <Header />
-    <Navigation />
-  </div>
-  <main class="main">
-    <RouterView />
+  <Header :nav="isNav"></Header>
+  <main>
+    <router-view />
   </main>
 </template>
 
-<style scoped>
-.head {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  z-index: 10;
-}
-.main {
-}
-</style>
+<style scoped></style>
