@@ -5,6 +5,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  // NOTE: prop "variant" to remove
   variant: {
     type: String,
     default: "positive",

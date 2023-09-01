@@ -2,7 +2,13 @@
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import PhotoCard from "./PhotoCard.vue";
 import Loader from "./ui/Loader.vue";
+
+// NOTE: should be fetched
 import photosListMock from "@/assets/mocks/photosListMock";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+// console.log(route.params.username);
 
 const data = ref(photosListMock); //.slice(0, photosListMock.length / 2)
 const photosArr = computed(() => {
@@ -53,12 +59,12 @@ async function handleScroll() {
 .grid {
   display: grid;
   align-items: start;
-  grid-template-columns: repeat(var(--photolist-columns), minmax(0, 1fr));
-  column-gap: var(--photolist-gap);
+  grid-template-columns: repeat(var(--list-columns), minmax(0, 1fr));
+  column-gap: var(--list-gap);
 }
 .column {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  row-gap: var(--photolist-gap);
+  row-gap: var(--list-gap);
 }
 </style>

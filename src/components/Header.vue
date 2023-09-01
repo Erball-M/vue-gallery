@@ -3,6 +3,7 @@ import Svg from "./ui/Svg.vue";
 import Navigation from "./Navigation.vue";
 import SearchForm from "./SearchForm.vue";
 import Button from "./ui/Button.vue";
+import SelectModal from "./ui/SelectModal.vue";
 import { useThemeToggle } from "../composables​/useThemeToggle";
 
 const props = defineProps({
@@ -31,12 +32,14 @@ const { changeTheme } = useThemeToggle();
         title="Toggle theme"
       ></Button>
       <!-- NOTE: Make popup window for burger menu -->
-      <Button
-        icon="burger_menu"
-        size="l"
-        variant="inline"
-        class="header__menu"
-      ></Button>
+      <!-- <div class="header__menu"></div> -->
+      <SelectModal icon="burger_menu" variant="inline" size="l">
+        <ul>
+          <li v-for="n in 10" :key="n" @click="console.log(`header ${n}`)">
+            item{{ n }}
+          </li>
+        </ul>
+      </SelectModal>
     </div>
     <Navigation v-if="props.nav" />
   </header>
@@ -65,7 +68,5 @@ const { changeTheme } = useThemeToggle();
 }
 .header__search {
   flex: 1 1 auto;
-}
-.header__menu {
 }
 </style>

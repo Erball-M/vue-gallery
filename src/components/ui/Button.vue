@@ -1,5 +1,5 @@
 <script setup>
-import { computed, useSlots } from "vue";
+import { computed, onMounted, ref, useSlots } from "vue";
 import Svg from "./Svg.vue";
 
 const props = defineProps({
@@ -14,6 +14,7 @@ const props = defineProps({
     default: "r",
     validator: (value) => ["s", "r", "l"].includes(value),
   },
+  // link: Boolean,
 });
 
 const slots = useSlots();
@@ -25,21 +26,26 @@ const classNames = {
   "button_size-r": props.size === "r",
   "button_size-l": props.size === "l",
 };
+
+const rootRef = ref(null);
+defineExpose({ rootRef });
 </script>
 
 <template>
-  <button class="button" :class="classNames" ref="refs">
+  <!-- NOTE: need to make tagName more configurable -->
+  <!-- component :is="props.link ? 'a' : 'button'" -->
+  <button class="button" :class="classNames" ref="rootRef">
     <Svg
       v-if="props.icon"
       class="button__icon"
       :name="props.icon"
       :size="props.size"
     ></Svg>
-    <div
+    <!-- <div
       v-if="!props.icon"
       class="button__stretcher"
       :style="{ height: `var(--icon-${props.size})` }"
-    />
+    /> -->
     <span class="button__label">
       <slot name="default" />
     </span>
@@ -52,9 +58,10 @@ const classNames = {
   justify-content: center;
   align-items: center;
   user-select: none;
+  cursor: pointer;
 }
 .button_default {
-  /* border: 1px solid rgb(var(--color-secondary-400)); */
+  border: 1px solid rgb(var(--color-secondary-300));
   border-radius: var(--button-border-radius);
   background-color: rgb(var(--color-primary));
   padding: var(--button-padding-y) var(--button-padding-x);
@@ -63,11 +70,11 @@ const classNames = {
 .button_gaped {
   column-gap: var(--button-column-gap);
 }
-.button__stretcher {
+/* .button__stretcher {
   display: inline-block;
   background: none;
   width: 0;
-}
+} */
 .button__icon {
   fill: rgb(var(--color-secondary-400));
 }
@@ -77,7 +84,7 @@ const classNames = {
 .button:hover,
 .button:hover .button__icon,
 .button:hover .button__label {
-  /* border-color: rgb(var(--color-secondary-500)); */
+  border-color: rgb(var(--color-secondary-500));
   fill: rgb(var(--color-secondary-500));
   color: rgb(var(--color-secondary-500));
 }

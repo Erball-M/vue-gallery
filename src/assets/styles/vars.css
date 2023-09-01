@@ -20,7 +20,7 @@
 
     --color-positive: 0, 127, 255;
 
-    --transition-theme: background-image .1s ease-in-out, background-color .1s ease-in-out, color 0s ease-in-out, fill .1s ease-in-out, border-color .1s ease-in-out, opacity .1s ease-in-out;
+    --transition-theme: background-color .1s ease-in-out, color 0s ease-in-out, fill 0s ease-in-out, border-color .1s ease-in-out, opacity .1s ease-in-out;
 
     --container-max-width: 1280px;
     --container-padding-x: 20px;
@@ -40,6 +40,7 @@
     --nav-link-padding-y: 1em;
 
     --banner-size-r: 594px;
+    /* NOTE */
     --banner-size-s: 310px;
     --banner-description-max-width: 600px;
     --banner-description-line-height: 1.55em;
@@ -47,13 +48,13 @@
     --banner-bg-color: 0, 0, 0;
     --banner-margin-bottom: 48px;
 
-    --photolist-gap: 24px;
-    --photolist-columns: 3;
+    --list-gap: 24px;
+    --list-columns: 3;
 
-    --user-badge-direction: row;
     --user-badge-gap: 30px;
-    --user-badge-header-ratio: 30%;
-    --user-badge-body-ratio: 70%;
+
+    /* --body-padding: 0 0 80px; */
+    --footer-padding: 80px 0;
 }
 
 body[data-theme=light] {
@@ -65,7 +66,7 @@ body[data-theme=light] {
     --color-secondary-400: 118, 118, 118;
     --color-secondary-500: 17, 17, 17;
 
-    --form-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    --form-shadow: 0px 1px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 body[data-theme=dark] {
@@ -77,5 +78,5 @@ body[data-theme=dark] {
     --color-secondary-400: 210, 210, 210;
     --color-secondary-500: 255, 255, 255;
 
-    --form-shadow: rgba(255, 255, 255, 0.04) 0px 1px 1px 0px;
+    --form-shadow: 0px 1px 10px 0 rgba(255, 255, 255, 0.1);
 }

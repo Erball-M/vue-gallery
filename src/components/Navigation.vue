@@ -181,9 +181,6 @@ onUnmounted(() => {
   white-space: nowrap;
   padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
 }
-.navigation__link:hover {
-  text-decoration: none;
-}
 .navigation__item_active {
 }
 .navigation__link_active {

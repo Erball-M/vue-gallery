@@ -11,7 +11,8 @@ body {
     /*width: 100vw; */
     /* height: 100vh; */
     /* height: 100dvh; */
-    /* overflow: hidden; */
+    overflow-x: hidden;
+    /* padding: var(--body-padding); */
     font-family: var(--ff);
     font-size: var(--fz-r);
     color: rgb(var(--color-secondary-500));
@@ -36,7 +37,6 @@ body {
     -ms-overflow-style: none;
 }
 
-
 #app {
     min-height: 100vh;
     min-height: 100dvh;
@@ -58,7 +58,6 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
     color: rgb(var(--color-secondary-500));
 }
 
@@ -68,5 +67,4 @@ a:hover {
 
 .link:hover {
     color: rgb(var(--banner-color));
-    text-decoration: none;
 }

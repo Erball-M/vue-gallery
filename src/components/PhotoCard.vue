@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from "vue";
 import { UnLazyImage } from "@unlazy/vue/components";
 import AuthorBadge from "./AuthorBadge.vue";
 import Button from "./ui/Button.vue";
@@ -37,12 +36,12 @@ const props = defineProps({
         <!-- <Button icon="heart" size="r">{{ props.photo.likes }}</Button> -->
         <!-- NOTE: maybe it should be router-link instead of button tag -->
         <!-- NOTE: add feature for searching similar color -->
-        <Button size="r" link :title="`Find color ${props.photo.color}`">
+        <!-- <Button size="r" link :title="`Find color ${props.photo.color}`">
           <div
             class="color-block"
             :style="{ background: props.photo.color }"
           ></div>
-        </Button>
+        </Button> -->
         <!-- NOTE: add feature for searching similars -->
         <Button
           icon="magnifying_glass"
@@ -54,6 +53,7 @@ const props = defineProps({
       <div class="controls__data">
         <AuthorBadge :user="props.photo.user" variant="neutral"></AuthorBadge>
         <!-- NOTE: add download feature -->
+        <!-- <Button icon="download" size="r" title="Download photo"></Button> -->
         <Button icon="download" size="r" title="Download photo"></Button>
       </div>
     </div>

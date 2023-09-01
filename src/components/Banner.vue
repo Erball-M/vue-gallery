@@ -1,6 +1,5 @@
 <script setup>
 import { watch, computed, onMounted, ref } from "vue";
-// import { RouterLink } from "vue-router";
 import { UnLazyImage } from "@unlazy/vue/components";
 import Container from "./ui/Container.vue";
 import Svg from "./ui/Svg.vue";
@@ -33,6 +32,7 @@ onMounted(() => {
   <div class="banner">
     <div class="banner__image">
       <!-- :data-srcset="dataSrcset" -->
+      <!-- NOTE: make lower quality for faster loading -->
       <UnLazyImage
         class="banner__picture"
         :alt="props.topic.cover_photo.alt_description"
@@ -100,6 +100,7 @@ onMounted(() => {
                 params: { username: props.topic.cover_photo.user.username },
               }"
               class="link"
+              :title="props.topic.cover_photo.user.username"
             >
               {{ props.topic.cover_photo.user.name }}
             </router-link>
